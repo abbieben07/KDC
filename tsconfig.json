@@ -1,0 +1,66 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "useDefineForClassFields": true,
+    "importHelpers": true,
+    "allowJs": false,
+    "noUnusedLocals": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "removeComments": false,
+    "noImplicitThis": true,
+    "isolatedModules": true,
+    "checkJs": false,
+    "noImplicitAny": false,
+    "noEmitOnError": false,
+    "baseUrl": ".",
+    "types": [
+      "webpack-env",
+      "jest"
+    ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "~/*": [
+        "node_modules/*"
+      ],
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ],
+    "plugins": [
+      {
+        "name": "@vuedx/typescript-plugin-vue"
+      }
+    ],
+  },
+  "typedocOptions": {
+    "entryPoints": [
+      "resources/ts/app.ts"
+    ],
+    "out": "docs"
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

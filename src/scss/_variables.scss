@@ -1,0 +1,12 @@
+// Bootstrap Color Scheme
+$light: #fbc591;
+$dark: #1a2049;
+$primary: #08c415;
+$secondary: #545353;
+$info: #e01e95;
+$success: #02ae0d;
+$warning: #fac502;
+$danger: #f6014b;
+
+$primary-dark: darken($primary, 10%);
+$primary-darker: darken($primary, 20%);
