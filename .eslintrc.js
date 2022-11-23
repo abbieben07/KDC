@@ -15,7 +15,7 @@ module.exports = {
 		browser: true,
 		node: true,
 		es6: true,
-		jquery: true
+		jquery: true,
 	},
 
 	globals: {
@@ -36,7 +36,7 @@ module.exports = {
 				},
 			},
 		],
-		'vue/html-indent': [
+		'vue/html-indent': 'off' /* [
 			'error',
 			4,
 			{
@@ -46,7 +46,7 @@ module.exports = {
 				alignAttributesVertically: true,
 				ignores: [],
 			},
-		],
+		] */,
 		'vue/singleline-html-element-content-newline': [
 			'error',
 			{
@@ -83,7 +83,7 @@ module.exports = {
 				varsIgnorePattern: '^_',
 				argsIgnorePattern: '^_',
 			},
-		], */
+		], */,
 	},
 
 	overrides: [
