@@ -1,0 +1,9 @@
+{
+    "root": "dist/",
+    "clean_urls": true,
+    "encoding": "UTF-8",
+    "routes": {
+        "/data/*": "/data/",
+        "/**": "index.html"
+    }
+}

@@ -6,7 +6,7 @@ import Style from 'ol/style/Style'
 
 export const extents = {
 	nigeria: transformExtent([2.32972872530833, 4.17157817396626, 14.6885090061778, 14.2088043723801], 'EPSG:4326', 'EPSG:3857'),
-	custom: (l: number, b: number, t: number, r: number) => transformExtent([l, b, t, r], 'EPSG:4326', 'EPSG:3857'),
+	custom: (l: number, b: number, t: number, r: number) => transformExtent([l, b, t, r], 'EPSG:3857', 'EPSG:3857'),
 }
 
 const image = new CircleStyle({
@@ -79,4 +79,4 @@ export const styles = {
 	}),
 }
 
-export const styler = (feature, styles) => styles[feature.getGeometry().getType()]
+export const styler = (feature, s = styles) => s[feature.getGeometry().getType()]

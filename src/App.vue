@@ -1,5 +1,5 @@
 <template>
-    <router-view />
+	<router-view />
 </template>
 <script lang="ts">
 import Theme from '@/theme/js/main/app'
@@ -39,7 +39,7 @@ export default class App extends Vue {
 <style lang="scss">
 @import '@/scss/app.scss';
 #main-container > .content {
-    width: 100% !important;
-    padding-bottom: 1.875rem !important;
+	width: 100% !important;
+	padding-bottom: 1.875rem !important;
 }
 </style>

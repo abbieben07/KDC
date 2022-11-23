@@ -1,17 +1,20 @@
 <template>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col p-3">
-                <Map ref="mapView" height="calc(100vh - 2rem)" />
-            </div>
-        </div>
-    </div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col p-3">
+				<Map ref="mapView" height="calc(100vh - 2rem)" />
+			</div>
+		</div>
+	</div>
 </template>
 <script lang="ts">
+import { extents, styler, styles } from '@/vue/components/Map'
 import Map from "@/vue/components/Map.vue"
 import { BaseLayerOptions } from 'ol-layerswitcher'
-import TileLayer from 'ol/layer/Tile'
-import TileWMS from 'ol/source/TileWMS'
+import GeoJSON from 'ol/format/GeoJSON'
+import VectorLayer from 'ol/layer/Vector'
+import VectorSource from 'ol/source/Vector'
+import { Fill, Stroke } from 'ol/style'
 import { Options, Ref, Vue } from "vue-decorator"
 
 
@@ -25,24 +28,108 @@ export default class Home extends Vue {
 	@Ref("mapView")
 	readonly map!: InstanceType<typeof Map>
 
+	get extent() {
+		return extents.custom(6.098732, 8.949464, 11.484692, 8.775892)
+	}
+
 	async mounted() {
 
-		this.map.olMap.addLayer(
-			new TileLayer({
-				title: "Kaduna Building Footprint",
-				source: new TileWMS({
-					url: `http://localhost:8082/geoserver/kdc/wms`,
-					params: {
-						TILED: true,
-						//SRS: params.srs,
-						LAYERS: 'kdc:kd',
-						//SLD_BODY: await this.getStyle(),
-					},
-					transition: 0,
-					serverType: 'geoserver',
-				}),
-			} as BaseLayerOptions)
+		fetch('/data/boundary.json')
+			.then((response) => response.json())
+			.then((json) => {
+				const style = styles
+				style.Polygon.setStroke(new Stroke({ width: 2, color: 'black' }))
+				style.Polygon.setFill(new Fill({ color: 'transparent' }))
+				this.map.olMap.addLayer(
+					new VectorLayer({
+						source: new VectorSource({
+							features: new GeoJSON().readFeatures(json, { featureProjection: 'EPSG:3857' }),
+						}),
+						visible: true,
+						style: (f) => styler(f, style),
+					} as BaseLayerOptions)
+				)
+			})
+
+		fetch('/data/settlements.json').then(
+			response => response.json()
+		).then(
+			(json) => {
+				const style = styles
+				style.Point.setFill(new Fill({color: 'green'}))
+				this.map.olMap.addLayer(
+					new VectorLayer({
+						title: "Settlements (Point)",
+						source: new VectorSource({
+							features: new GeoJSON().readFeatures(json, { featureProjection: 'EPSG:3857' }),
+						}),
+						visible: true,
+						style: (f) => styler(f, style),
+					} as BaseLayerOptions)
+				)
+			}
 		)
+
+
+		fetch('/data/settlements.polygon.new.json')
+			.then((response) => response.json())
+			.then((json) => {
+				const style = styles
+					style.MultiPolygon.setStroke(new Stroke({width: 1, color: 'blue'}))
+				style.MultiPolygon.setFill(new Fill({color: 'blue'}))
+				this.map.olMap.addLayer(
+					new VectorLayer({
+						title: 'New Settlements',
+						source: new VectorSource({
+							features: new GeoJSON().readFeatures(json, { featureProjection: 'EPSG:3857' }),
+						}),
+						visible: true,
+						style: (f) => styler(f, style),
+					} as BaseLayerOptions)
+				)
+			})
+
+
+		fetch('/data/settlements.polygon.json')
+			.then((response) => response.json())
+			.then((json) => {
+				const style = styles
+				style.MultiPolygon.setStroke(new Stroke({width: 1, color: 'orange'}))
+				style.MultiPolygon.setFill(new Fill({color: 'orange'}))
+				this.map.olMap.addLayer(
+					new VectorLayer({
+						title: 'Settlements',
+						source: new VectorSource({
+							features: new GeoJSON().readFeatures(json, { featureProjection: 'EPSG:3857' }),
+						}),
+						visible: true,
+						style: (f) => styler(f, style),
+					} as BaseLayerOptions)
+				)
+			})
+
+
+		fetch('/data/road.json')
+			.then((response) => response.json())
+			.then((json) => {
+				const style = styles
+				style.LineString.setFill(new Fill({color: 'black'}))
+				this.map.olMap.addLayer(
+					new VectorLayer({
+						title: 'Roads',
+						source: new VectorSource({
+							features: new GeoJSON().readFeatures(json, { featureProjection: 'EPSG:3857' }),
+						}),
+						visible: true,
+						style: (f) => styler(f, style),
+					} as BaseLayerOptions)
+				)
+			})
+
+
+
+
+		//extents.custom(6, 8, 12, 10)this.map.olMap.getView().fit(extents.custom(6, 8, 12, 10))
 
 	}
 }
