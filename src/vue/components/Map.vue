@@ -12,13 +12,11 @@ import Rotate from 'ol/control/Rotate'
 import ScaleLine from 'ol/control/ScaleLine'
 import ZoomSlider from 'ol/control/ZoomSlider'
 import ZoomToExtent from 'ol/control/ZoomToExtent'
-import { toStringHDMS } from 'ol/coordinate'
 import { Extent } from 'ol/extent'
 import { defaults as defaultInteractions, DragRotateAndZoom } from 'ol/interaction'
 import TileLayer from 'ol/layer/Tile'
 import OlMap from 'ol/Map'
 import Overlay from 'ol/Overlay'
-import { toLonLat } from 'ol/proj'
 import OSM from 'ol/source/OSM'
 import XYZ from 'ol/source/XYZ'
 import View from 'ol/View'
@@ -95,14 +93,14 @@ export default class Map extends Vue {
                 center: [0, 0]
             })
         })
-        this.olMap.on('singleclick', (e) => {
+       /*  this.olMap.on('singleclick', (e) => {
             console.log(e)
             const coordinate = e.coordinate
             const hdms = toStringHDMS(toLonLat(coordinate))
 
             this.popup.getElementsByTagName("div")[0].innerHTML = '<p>You clicked here:</p><code>' + hdms + '</code>'
             overlay.setPosition(coordinate)
-        })
+        }) */
 
         this.olMap.addControl(new LayerSwitcher())
     }
