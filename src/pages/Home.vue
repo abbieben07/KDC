@@ -1,11 +1,11 @@
 <template>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col p-3">
-				<Map ref="mapView" height="calc(100vh - 2rem)" />
-			</div>
-		</div>
-	</div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col p-3">
+                <Map ref="mapView" height="calc(100vh - 2rem)" />
+            </div>
+        </div>
+    </div>
 </template>
 <script lang="ts">
 import { extents, styler, styles } from '@/vue/components/Map'
@@ -156,7 +156,7 @@ export default class Home extends Vue {
 					new VectorLayer({
 						title: 'Layout Floor Plan',
 						source: new VectorSource({
-							features: new GeoJSON().readFeatures(json, { featureProjection: 'EPSG:3857' }),
+							features: new GeoJSON().readFeatures(json, { featureProjection: 'EPSG:4326' }),
 						}),
 						visible: true,
 						style: (f) => styler(f, style),
